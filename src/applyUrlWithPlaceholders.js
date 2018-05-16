@@ -9,7 +9,6 @@ export default function applyUrlWithPlaceholders(url, placeholders, noEncode = [
     if (acc.indexOf(token) !== -1) {
       const value = noEncode.includes(key) ?
         placeholders[key] : encodeURIComponent(placeholders[key]);
-      console.log("Replacing", key, token, value);
       return acc.replace(token, value);
     }
 
