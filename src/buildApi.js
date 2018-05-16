@@ -18,7 +18,7 @@ export default function buildApi(endpoints, config = {}) {
   } = config;
 
   return Object.keys(endpoints).reduce((acc, key) => {
-    const { path, required, method: normalizeArguments } = endpoints[key];
+    const { path, required, method: normalizeArguments, noEncode = [] } = endpoints[key];
 
     const requiredPlaceholders = required || [];
     const placeholderRegexp = /:([^\/$]+)/g;
@@ -63,7 +63,7 @@ export default function buildApi(endpoints, config = {}) {
 
       const req = request(
         baseUrl,
-        applyUrlWithPlaceholders(path, placeholders),
+        applyUrlWithPlaceholders(path, placeholders, noEncode),
         configureOptions(augmentedOptions)
       );
 

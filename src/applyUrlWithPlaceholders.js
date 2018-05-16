@@ -1,13 +1,16 @@
 import queryString from 'query-string';
 
-export default function applyUrlWithPlaceholders(url, placeholders) {
+export default function applyUrlWithPlaceholders(url, placeholders, noEncode = []) {
   const query = {};
 
   const completeUrl = Object.keys(placeholders).reduce((acc, key) => {
     const token = `:${key}`;
 
     if (acc.indexOf(token) !== -1) {
-      return acc.replace(token, encodeURIComponent(placeholders[key]))
+      const value = noEncode.includes(key) ?
+        placeholders[key] : encodeURIComponent(placeholders[key]);
+      console.log("Replacing", key, token, value);
+      return acc.replace(token, value);
     }
 
     if (placeholders[key] !== null) {
